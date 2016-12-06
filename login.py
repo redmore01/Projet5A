@@ -35,5 +35,5 @@ class LoginApp(App):
 		manager.transition = SlideTransition(direction="left")
 		return manager
 
-if __name__ == '__main__':
+if __name__ == '__login__':
 	LoginApp().run()
