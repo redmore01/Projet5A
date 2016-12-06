@@ -3,27 +3,17 @@
 
 
 
-[ContainerToggle@ToggleButton]:
-    group: "container_toggle"
-    text: ctx.text
-    on_press: root.parent.parent.parent.show_kv(*args)
-    state: ctx.state if hasattr(ctx, "state") else "normal"
 
-<Container>:
-    canvas.before:
-        Color:
-            rgb: 0, 0, 0
-        Rectangle:
-            pos: self.pos
-            size: self.size
+
+
 
 <Catalog>:
 	id: reactive_layout
-    language_box: language_box
     screen_manager: screen_manager
     
     info_label: info_lbl
     orientation: 'vertical'
+	
 	Splitter:
 		id: editor_pane
 		max_size: '500sp'
@@ -40,6 +30,7 @@
 				ToggleButton:
 				
 					text: ""
+					
 					BoxLayout:
 						orientation: "vertical"
 						y: self.parent.y
@@ -59,6 +50,7 @@
 								source: "softboy.png"
 							Image:
 								source: "softboy.png"
+					
 				
 			BoxLayout:
 				
@@ -98,6 +90,7 @@
 				ToggleButton:
 				
 					text: ""
+					
 					BoxLayout:
 						orientation: "horizontal"
 						y: self.parent.y
@@ -126,15 +119,7 @@
     BoxLayout:
         id: reactive_layout
         orientation: 'horizontal' if self.width < self.height else 'vertical'
-		ScrollView:
-			id: kr_scroll
-			size_hint_x:0
-			size_hint_y:0
-			size: 0, 0
-			KivyRenderTextInput:
-				catalog: root
-				id: language_box
-				
+		
 		BoxLayout:
 			orientation: 'horizontal' if self.width < self.height else 'vertical'
 			id: reactive_layout
@@ -146,10 +131,11 @@
 					size_hint: 1, None
 					height: '700sp'
 					orientation: "vertical"
-				
-					ToggleButton:
 					
+					ToggleButton:
+						
 						text: "B1"
+						on_press: self.text = 'pressssssssssssssssssssssssssed'
 						Image:
 							source: "softboy.png"
 							
@@ -157,17 +143,7 @@
 							x: self.parent.x
 							size: self.parent.width, self.parent.height
 							allow_stretch: True
-						on_press: self.text = 'zz'
-						on_release: self.text = 'B1'
-						
-					ToggleButton:
-						text: "B2"
-						Image:
-							source: "softboy.png"
-							y: self.parent.y
-							x: self.parent.x
-							size: self.parent.width, self.parent.height
-							allow_stretch: True
+			
 					ToggleButton:
 						
 						text: "B3"
@@ -177,6 +153,7 @@
 							x: self.parent.x
 							size: self.parent.width, self.parent.height
 							allow_stretch: True
+							
 					ToggleButton:
 						
 						text: "B4"
@@ -297,46 +274,7 @@
 							allow_stretch: True
 
 					
-				
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
+			
 	  
 
 
@@ -348,33 +286,8 @@
            
             Screen:
                 name: "Grid Layout"
-                GridLayoutContainer:
-            Screen:
-                name: "Stack Layout"
-                StackLayoutContainer:
-            Screen:
-                name: "Buttons"
-                ButtonContainer:
-          
-            Screen:
-                name: "Progress Bar"
-                ProgressBarContainer:
-            Screen:
-                name: "Media"
-                MediaContainer:
-            Screen:
-                name: "Text"
-                TextContainer:
-          
-            Screen:
-                name: "Selectors"
-                SelectorsContainer:
-            Screen:
-                name: "File Choosers"
-                FileChooserContainer:
-            Screen:
-                name: "Scatter"
-                ScatterContainer:
+                
+            
            
     FloatLayout:
         size_hint: 1, None
