@@ -1,12 +1,13 @@
 
 
 import kivy
-kivy.require('1.4.2')
+kivy.require('1.0.5')
 import os
 import sys
 from kivy.app import App
 from kivy.factory import Factory
 from kivy.lang import Builder, Parser, ParserException
+from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
@@ -16,26 +17,23 @@ from kivy.clock import Clock
 from kivy.uix.image import Image
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.togglebutton import ToggleButton
-from kivy.adapters.dictadapter import DictAdapter
-from kivy.uix.listview import ListView, ListItemButton
-from kivy.uix.selectableview import SelectableView
-from kivy.adapters.listadapter import ListAdapter
-from kivy.uix.popup import Popup
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.splitter import Splitter
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
 from functools import partial
 from kivy.uix.pagelayout import PageLayout
-BLEU = (0, 1, 1)
+
 AllImage_ROOT = os.path.dirname(__file__)
 
-#Can be used later for Heritage
+from interface2 import Interface2App
+
 '''List of classes that need to be instantiated in the factory from .kv files.
 '''
 CONTAINER_PNG = os.path.join(AllImage_ROOT, 'images')
 IMAGES_NAMES = [c[:-4] for c in os.listdir(CONTAINER_PNG)]
 
+LIST_IM = os.listdir(CONTAINER_PNG)
  
 class ImageButton(ButtonBehavior, Image):
     pass
@@ -44,14 +42,16 @@ class GridButton(ButtonBehavior, GridLayout):
     pass
 
 
-class AllImage(BoxLayout):
+class AllImage(Screen):
     
     
-    # screen_manager = ObjectProperty()
+    # self.screen_manager = ObjectProperty()
   
     def __init__(self, **kwargs):
-        BoxLayout.__init__(self, **kwargs)
-        self.orientation='vertical'
+        Screen.__init__(self, **kwargs)
+        self.mainbox = BoxLayout()
+        self.add_widget(self.mainbox)
+        self.mainbox.orientation='vertical'
 
         self.splitter = Splitter(sizable_from = 'bottom')
         rootgrid = ScrollView()
@@ -69,7 +69,7 @@ class AllImage(BoxLayout):
         self.box.size_hint_x=None
         self.box.width=self.width
 		
-        self.add_widget(self.splitter)
+        self.mainbox.add_widget(self.splitter)
         # super(AllImage, self).__init__(**kwargs)
         for im in IMAGES_NAMES:
             if IMAGES_NAMES != None :
@@ -83,7 +83,7 @@ class AllImage(BoxLayout):
         self.splitter.add_widget(rootbox)
         rootgrid.add_widget(self.layout)
          
-        self.add_widget(rootgrid)
+        self.mainbox.add_widget(rootgrid)
         
 
     def onpress_addpage(self, listim, im):
@@ -113,14 +113,16 @@ class AllImage(BoxLayout):
                 self.box.width=(self.width) * 1
                 
                 gridpage1 = GridLayout(cols = 1, spacing=10)   
-                button_interfaceswitch1 = GridButton(cols = 1)  
-               
+                gridpage1.col_width = '50sp'	#not working
+                # gridpage1.col_default_width = '500sp' #not the result we need
+                button_interfaceswitch1 = GridButton(cols = 1, spacing=20)  
+                # gridpage1.size =(button_interfaceswitch1.width, button_interfaceswitch1.height)
                 for y in self.listim:
 		
                     image = Image(source = y)
                     gridpage1.add_widget(image)
-                button_interfaceswitch1.bind(on_press=lambda a, image=image:self.layout.add_widget( ImageButton(source = 'softboy.png') ))
-
+                button_interfaceswitch1.bind(on_press=lambda a: self.change_screen(1,self.listim))
+                # gridpage1.width = button_interfaceswitch1.width *1
                 button_interfaceswitch1.add_widget(gridpage1)
                 self.box.add_widget(button_interfaceswitch1)
 				
@@ -129,12 +131,12 @@ class AllImage(BoxLayout):
             
                 self.box.width=(self.width) * 1.5 
                 gridpage2 = GridLayout(rows = 1, spacing=10)  
-                button_interfaceswitch2 = GridButton(cols = 1)  				
+                button_interfaceswitch2 = GridButton(cols = 1, spacing=20)  				
                 for y in self.listim:
 		
                     image = Image(source = y)
                     gridpage2.add_widget(image)
-                button_interfaceswitch2.bind(on_press=lambda a, image=image:self.layout.add_widget( ImageButton(source = 'hy1.png') ))
+                button_interfaceswitch2.bind(on_press=lambda a: self.change_screen(3,self.listim))
                 button_interfaceswitch2.add_widget(gridpage2)
                 self.box.add_widget(button_interfaceswitch2)
 
@@ -144,12 +146,12 @@ class AllImage(BoxLayout):
             
                 self.box.width=(self.width) * 2
                 gridpage3 = GridLayout(rows = 2, spacing=10)         
-                button_interfaceswitch3 = GridButton(cols = 1)  				
+                button_interfaceswitch3 = GridButton(cols = 1, spacing=20)  				
                 for y in self.listim:
 		
                     image = Image(source = y)
                     gridpage3.add_widget(image)
-                button_interfaceswitch3.bind(on_press=lambda a, image=image:self.layout.add_widget( ImageButton(source = '1211810004.png') ))
+                button_interfaceswitch3.bind(on_press=lambda a: self.change_screen(4,self.listim))
                 button_interfaceswitch3.add_widget(gridpage3)
                 self.box.add_widget(button_interfaceswitch3)
 
@@ -157,21 +159,43 @@ class AllImage(BoxLayout):
             # if newimage not in self.listim[:]:
             
                 self.box.width=(self.width) * 2.5
-                gridpage4 = GridLayout(cols = 2, spacing=10)               
-                button_interfaceswitch4 = GridButton(cols = 1)  				
+                gridpage4 = GridLayout(cols = 2, spacing=10)   
+                			
+                button_interfaceswitch4 = GridButton(cols = 1, spacing=20)  				
                 for y in self.listim:
 		
                     image = Image(source = y)
                     gridpage4.add_widget(image)
-                button_interfaceswitch4.bind(on_press=lambda a, image=image:self.layout.add_widget( ImageButton(source = 'mix.png') ))
+                button_interfaceswitch4.bind(on_press=lambda a: self.change_screen(2,self.listim))
                 button_interfaceswitch4.add_widget(gridpage4)
                 self.box.add_widget(button_interfaceswitch4)
 
         print(self.listim)
         
 
+    def change_screen(self, x, list): 
+        print("login : %s || pass : %s")
+        
+        
+        if x <= 2:
+            gridscreen = GridLayout(cols = x)
+            for y in self.listim:
+		
+                image = Image(source = y)
+                gridscreen.add_widget(image)
+        else:
+            gridscreen = GridLayout(rows = x-2)
+            for y in self.listim:
+		
+                image = Image(source = y)
+                gridscreen.add_widget(image)
+        screen = self.manager.get_screen('interface2').screen
+        screen.clear_widgets()
+        # for i in range(self.slider.value):
+        screen.add_widget(gridscreen) 
+        self.manager.current = self.manager.next()
 	
-	
+
 	
     def change_color_btn(ImageButton): #A ajouter pour changer la couleur de l'arrier plan
 	                                   #de l'image selectionner
@@ -183,10 +207,19 @@ class Interface1(App):
     widget into the root.'''
 
     def build(self):
-        return AllImage()
+        manager= ScreenManager()
+		
+        manager.add_widget(AllImage(name='interface1'))
+		
+        # ajout de la vue 'interface2'
+        app = Interface2App()
+        app.load_kv()
+        interface2View = app.build()
+        manager.add_widget(interface2View)
+		
+        manager.transition = SlideTransition(direction="left")
+        return manager
 
-    def on_pause(self):
-        return True
 
 
 if __name__ == "__main__":
