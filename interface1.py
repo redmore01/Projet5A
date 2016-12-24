@@ -191,10 +191,16 @@ class AllImage(Screen):
                 gridscreen.add_widget(image)
         screen = self.manager.get_screen('interface2').screen
         screen.clear_widgets()
-        # for i in range(self.slider.value):
+        
         screen.add_widget(gridscreen) 
-        self.manager.current = self.manager.next()
+        self.manager.transition = SlideTransition(direction="left")
+        self.manager.current = 'interface2'
+        self.manager.get_screen('interface2')
 	
+    def backtologin(self):
+        self.manager.transition = SlideTransition(direction="right")
+        self.manager.current = 'login'
+        self.manager.get_screen('login')
 
 	
     def change_color_btn(ImageButton): #A ajouter pour changer la couleur de l'arrier plan
@@ -207,20 +213,10 @@ class Interface1(App):
     widget into the root.'''
 
     def build(self):
-        manager= ScreenManager()
-		
-        manager.add_widget(AllImage(name='interface1'))
-		
-        # ajout de la vue 'interface2'
-        app = Interface2App()
-        app.load_kv()
-        interface2View = app.build()
-        manager.add_widget(interface2View)
-		
-        manager.transition = SlideTransition(direction="left")
-        return manager
-
-
+        
+        screen = AllImage()
+        screen.name = 'interface1'
+        return screen
 
 if __name__ == "__main__":
     Interface1().run()
