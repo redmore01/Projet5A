@@ -1,0 +1,20 @@
+#:kivy 1.4
+#:import KivyLexer kivy.extras.highlight.KivyLexer
+
+<ScatterWithImage>:
+	src: "softboy.png"
+	Image:
+		size: root.size
+		stretch: True
+		source: root.src
+
+
+<ToggleWithImage>:
+	src: "softboy.png"
+
+	Image:
+		size: root.size
+		y: root.y
+		x: root.x
+		stretch: True
+		source: root.src
