@@ -9,7 +9,8 @@ from kivy.factory import Factory
 from kivy.lang import Builder, Parser, ParserException
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 
-from kivy.properties import ObjectProperty
+from kivy.uix.scatter import Scatter
+from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.graphics import Color
 from kivy.animation import Animation
@@ -23,6 +24,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
 from functools import partial
 from kivy.uix.pagelayout import PageLayout
+
 
 AllImage_ROOT = os.path.dirname(__file__)
 
@@ -42,11 +44,19 @@ class GridButton(ButtonBehavior, GridLayout):
     pass
 
 
+class ScatterWithImage(Scatter):
+    src = StringProperty("softboy.png")
+
+class ToggleWithImage(ToggleButton):
+    src = StringProperty("softboy.png")
+
+
+	
 class AllImage(Screen):
     
     
     # self.screen_manager = ObjectProperty()
-  
+    screen = ObjectProperty()
     def __init__(self, **kwargs):
         Screen.__init__(self, **kwargs)
         self.mainbox = BoxLayout()
@@ -74,9 +84,15 @@ class AllImage(Screen):
         for im in IMAGES_NAMES:
             if IMAGES_NAMES != None :
                  
-                btn = ImageButton(source = im+'.png')
-                btn.bind(on_press=  lambda a, im=im:self.onpress_addpage(self.listim, im))                
-                self.layout.add_widget(btn)
+                # btn = ImageButton(source = im+'.png')
+                # btn.bind(on_press=  lambda a, im=im:self.onpress_addpage(self.listim, im))  
+				
+                # self.layout.add_widget(btn)
+				
+                toggleimage = ToggleWithImage(src=im+'.png')
+                toggleimage.bind(on_press=  lambda a, im=im:self.onpress_addpage(self.listim, im)) 
+                self.layout.add_widget(toggleimage)
+
 				
         print(self.listim)
         rootbox.add_widget(self.box)
@@ -180,15 +196,25 @@ class AllImage(Screen):
         if x <= 2:
             gridscreen = GridLayout(cols = x)
             for y in self.listim:
-		
-                image = Image(source = y)
-                gridscreen.add_widget(image)
+                # scatt = Scatter()
+                # scatt.scale = 2.5
+                # scatt.do_scale=False
+                # do_rotation = False
+                # scatt.do_translation_y = False
+                # image = Image(source = y)
+                # scatt.height = 800
+                # scatt.add_widget(image)
+				
+                gridscreen.add_widget(ScatterWithImage(src=y))
         else:
             gridscreen = GridLayout(rows = x-2)
             for y in self.listim:
-		
-                image = Image(source = y)
-                gridscreen.add_widget(image)
+                # scatt = Scatter()
+                
+                # image = Image(source = y)
+                # scatt.add_widget(image)
+				
+                gridscreen.add_widget(ScatterWithImage(src=y))
         screen = self.manager.get_screen('interface2').screen
         screen.clear_widgets()
         
