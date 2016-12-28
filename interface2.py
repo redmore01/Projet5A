@@ -217,8 +217,8 @@ class AllImage(Screen):
 		
 		
         self.manager.transition = SlideTransition(direction="left")
-        self.manager.current = 'interface2'
-        self.manager.get_screen('interface2')
+        self.manager.current = 'interface3'
+        self.manager.get_screen('interface3')
         self.manager.list1 = self.listim
         self.manager.x = x
 	
@@ -230,15 +230,15 @@ class AllImage(Screen):
 	
 
     
-class Interface1App(App):
+class Interface2App(App):
     '''The kivy App that runs the main root. All we do is build a AllImage
     widget into the root.'''
 
     def build(self):
         
         screen = AllImage()
-        screen.name = 'interface1'
+        screen.name = 'interface2'
         return screen
 
 if __name__ == "__main__":
-    Interface1App().run()
+    Interface2App().run()
