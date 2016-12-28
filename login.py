@@ -13,11 +13,12 @@ from kivy.uix.codeinput import CodeInput
 from kivy.animation import Animation
 from kivy.clock import Clock
 from kivy.config import Config
-Config.set('graphics', 'width', '800')
-Config.set('graphics', 'height', '600')
+Config.set('graphics', 'width', '1000')
+Config.set('graphics', 'height', '650')
 
-from interface1 import Interface1
+from interface4 import Interface4App
 from interface2 import Interface2App
+from interface3 import Interface3App
 
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
@@ -42,13 +43,13 @@ class Login(Screen):
 
 	screen = ObjectProperty()
 	def do_login(self, login, pwd):
-		if login == 'KivyLayout':
-			if pwd == 'Houssam':
-				self.manager.current = self.manager.next()
-			else:
-				self.show_popup()
-		else:
-			self.show_popup()
+		# if login == 'KivyLayout':
+			# if pwd == 'Houssam':
+		self.manager.current = self.manager.next()
+			# else:
+				# self.show_popup()
+		# else:
+			# self.show_popup()
 				
 
 	def show_popup(self):
@@ -66,17 +67,24 @@ class LoginApp(App):
 		# ajout de l'instance de login
 		manager.add_widget(Login(name='login'))
 
-		# ajout de la vue 'interface1'
-		app = Interface1()
-		app.load_kv()
-		interfacen1 = app.build()
-		manager.add_widget(interfacen1)
 		
 		# ajout de la vue 'interface2'
 		app2 = Interface2App()
 		app2.load_kv()
 		interfacen2 = app2.build()
 		manager.add_widget(interfacen2)
+		
+		# ajout de la vue 'interface3'
+		app3 = Interface3App()
+		app3.load_kv()
+		interfacen3 = app3.build()
+		manager.add_widget(interfacen3)
+		
+		# ajout de la vue 'interface4'
+		app4 = Interface4App()
+		app4.load_kv()
+		interfacen4 = app4.build()
+		manager.add_widget(interfacen4)
 
 		manager.transition = SlideTransition(direction="left")
 		return manager
