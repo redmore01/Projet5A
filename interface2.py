@@ -29,7 +29,7 @@ from kivy.uix.pagelayout import PageLayout
 
 AllImage_ROOT = os.path.dirname(__file__)
 
-from interface2 import Interface2App
+from interface3 import Interface3App
 
 '''List of classes that need to be instantiated in the factory from .kv files.
 '''
