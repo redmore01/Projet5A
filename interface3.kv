@@ -2,23 +2,29 @@
 #:import KivyLexer kivy.extras.highlight.KivyLexer
 
 
-
+<ScatterWithImage>:
+	src: "softboy.png"
+	Image:
+		size: root.size
+		stretch: True
+		source: root.src
 
 
 
 
 <Catalog>:
     screen:screen
+	list:list
 	BoxLayout:
 		
-		screen_manager: screen_manager
 		
-		info_label: info_lbl
+		
 		orientation: 'vertical'
 		
 		
 		BoxLayout:
 			padding: '2sp'
+			
 			canvas:
 				Color:
 					rgba: 1, 1, 1, .6
@@ -30,71 +36,16 @@
 			BoxLayout:
 				width: '645sp'
 				size_hint: None, 1
-				Button:
-					text: 'Back'
-					size_hint: None, 1
-					width: '150sp'
-					on_press: root.disconnect()
-			
-			Button:
-				text: 'Enregistrer'
-				size_hint: None, 1
-				width: '150sp'
 				
+		
+
 				
 
 		BoxLayout:
 			id: screen
 			padding: '2sp'
 			orientation: "vertical"
-		
-			GridLayout:
-				cols:3
-				text: ""
-				
-				ToggleButton:
-					orientation: "vertical"
-					y: self.parent.y
-					x: self.parent.x
-					size: self.parent.width, self.parent.height
-					allow_stretch: True
 
-					Image:
-						y: self.parent.y
-						x: self.parent.x
-						size: self.parent.width, self.parent.height
-						allow_stretch: True
-						source: "softboy.png"
-				GridLayout:
-					rows:2
-					text: ""
-					ToggleButton:
-						orientation: "horizontal"
-						y: self.parent.y
-						x: self.parent.x
-						size: self.parent.width, self.parent.height
-						allow_stretch: True
-							
-						Image:
-							y: self.parent.y
-							x: self.parent.x
-							size: self.parent.width, self.parent.height
-							allow_stretch: True
-							source: "softboy.png"
-					ToggleButton:
-						y: self.parent.y
-						x: self.parent.x
-						size: self.parent.width, self.parent.height
-					
-						orientation: "horizontal"
-						allow_stretch: True
-						Image:
-							y: self.parent.y
-							x: self.parent.x
-							size: self.parent.width, self.parent.height
-							allow_stretch: True
-							source: "softboy.png"
-				
 		BoxLayout:
 			padding: '2sp'
 			canvas:
@@ -106,44 +57,26 @@
 			size_hint: 1, None
 			height: '45sp'
 			Button:
-				text: "Changer place"
+				text: 'Retour'
 				size_hint: None, 1
-				width: '200sp'
+				width: '250sp'
+				on_press: root.backtointerface1()
 			Button:
-				text: 'Augmenter Hauteur'
+				text: 'Option 1'
 				size_hint: None, 1
-				width: '200sp'
+				width: '250sp'
 			Button:
-				text: 'Diminuer Hauteur'
+				text: 'Option 2'
 				size_hint: None, 1
-				width: '200sp'
+				width: '250sp'
 			Button:
-				text: 'Augmenter Largeur'
+				text: 'Enregistrer'
 				size_hint: None, 1
-				width: '200sp'
+				width: '250sp'
+				on_press: root.change_screen()
 				
-			ScreenManager:
-				id: screen_manager
-				size_hint_x:0
-				size_hint_y:0
-				size: 0, 0
-			   
-				Screen:
-					name: "Grid Layout"
+	
 					
 				
 			   
-		FloatLayout:
-			size_hint: 1, None
-			height: 0
-			TextInput:
-				id:info_lbl
-				readonly: True
-				font_size: '14sp'
-				background_color: (0, 0, 0, 1)
-				foreground_color: (1, 1, 1, 1)
-				opacity:0
-				size_hint: 1, None
-				text_size: self.size
-				height: '150pt'
-				top: 0
+	
