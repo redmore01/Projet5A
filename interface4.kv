@@ -1,0 +1,64 @@
+#:kivy 1.4
+#:import KivyLexer kivy.extras.highlight.KivyLexer
+
+
+
+
+
+
+
+<Catalog>:
+    lastscreen:lastscreen
+	BoxLayout:
+		
+		
+		
+		orientation: 'vertical'
+		
+		
+		BoxLayout:
+			padding: '2sp'
+			
+			canvas:
+				Color:
+					rgba: 1, 1, 1, .6
+				Rectangle:
+					size: self.size
+					pos: self.pos
+			size_hint: 1, None
+			height: '45sp'
+			BoxLayout:
+				width: '645sp'
+				size_hint: None, 1
+				
+		
+
+				
+
+		BoxLayout:
+			id: lastscreen
+			padding: '2sp'
+			orientation: "vertical"
+
+		BoxLayout:
+			padding: '2sp'
+			canvas:
+				Color:
+					rgba: 1, 1, 1, .6
+				Rectangle:
+					size: self.size
+					pos: self.pos
+			size_hint: 1, None
+			height: '45sp'
+			Button:
+				text: 'Back'
+				size_hint: None, 1
+				width: '200sp'
+				on_press: root.disconnect()
+
+				
+	
+					
+				
+			   
+	
