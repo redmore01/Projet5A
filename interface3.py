@@ -56,7 +56,7 @@ class Catalog(Screen):
                 newimage= y+'.png'
                 gridscreen.add_widget(ScatterWithImage(src=newimage))
 
-        screen = self.manager.get_screen('interface2').screen
+        screen = self.manager.get_screen('interface3').screen
         screen.clear_widgets()
       
         screen.add_widget(gridscreen)
