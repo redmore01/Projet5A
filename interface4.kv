@@ -2,9 +2,16 @@
 #:import KivyLexer kivy.extras.highlight.KivyLexer
 
 
-
-
-
+<Boxheight>:
+	padding: '2sp'
+	canvas:
+		Color:
+			rgba: 1, 1, 1, .6
+		Rectangle:
+			size: self.size
+			pos: self.pos
+	size_hint: 1, None
+	height: '45sp'
 
 
 <Catalog>:
@@ -40,25 +47,4 @@
 			padding: '2sp'
 			orientation: "vertical"
 
-		BoxLayout:
-			padding: '2sp'
-			canvas:
-				Color:
-					rgba: 1, 1, 1, .6
-				Rectangle:
-					size: self.size
-					pos: self.pos
-			size_hint: 1, None
-			height: '45sp'
-			Button:
-				text: 'Back'
-				size_hint: None, 1
-				width: '200sp'
-				on_press: root.disconnect()
-
-				
-	
-					
-				
-			   
-	
+		
