@@ -16,9 +16,11 @@ from kivy.clock import Clock
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scatter import Scatter
-from kivy.uix.video import Video
+from kivy.uix.videoplayer import VideoPlayer
+from kivy.uix.button import Button
 
- 
+class Boxheight(BoxLayout):
+    pass
 
 class Catalog(Screen):
     
@@ -35,27 +37,79 @@ class Catalog(Screen):
         self.listim = self.manager.list1
         # self.grid = self.manager.gridtest
         x = self.manager.x
-        print(x)
+
+        print(self.listim)
+		
+        boxbot = Boxheight()
+        boxbot.height= 45
+		
+        btnback = Button(text = 'Retour')
+        btnback.bind(on_press = lambda a: self.disconnect())
+		
+        btnplay = Button(text = 'Lecture')	
+        btnpause = Button(text = 'Pause')
+        btnstop = Button(text = 'Stop')
+
+        btnsend = Button(text = 'Enregistrer')
+        # btnsend.bind(on_press = lambda a: self.send())
 		
             
         if x <= 2:
             gridscreen = GridLayout(cols = x)
             for y in self.listim:
 	
-                newimage= y+'.mp4'
-                gridscreen.add_widget(Video(source=newimage))
+                # newimage= y+'.avi'
+                video= VideoPlayer(source = y+'.avi')
+                video.state='pause'
+                btnplay.bind(on_press = lambda a, video=video: self.playvideo(video))
+                btnpause.bind(on_press = lambda a, video=video: self.pausevideo(video))
+                btnstop.bind(on_press = lambda a, video=video: self.stopvideo(video))
+
+
+
+                gridscreen.add_widget(video)
         else:
             gridscreen = GridLayout(rows = x-2)
             for y in self.listim:
 
-                newimage= y+'.mp4'
-                gridscreen.add_widget(Video(source=newimage))
+                # newimage= y+'.avi'
+                video= VideoPlayer(source = y+'.avi', state = 'pause')
+                btnplay.bind(on_press = lambda a, video=video: self.playvideo(video))
+                btnpause.bind(on_press = lambda a, video=video: self.pausevideo(video))
+                btnstop.bind(on_press = lambda a, video=video: self.stopvideo(video))
+                gridscreen.add_widget(video)
 
         lastscreen = self.manager.get_screen('interface4').lastscreen
         lastscreen.clear_widgets()
+		
+        boxbot.add_widget(btnback)
+        boxbot.add_widget(btnplay)
+        boxbot.add_widget(btnpause)
+        boxbot.add_widget(btnstop)
+        boxbot.add_widget(btnsend)
+
         
         lastscreen.add_widget(gridscreen)
+        lastscreen.add_widget(boxbot)
+
+
 		
+		
+    # def lecturevideo(self):
+        
+    def playvideo(self, video):
+        video.state='play'
+
+				
+    def pausevideo(self, video):
+        video.state='pause'
+               
+
+    def stopvideo(self, video):
+        video.state='stop'
+               
+
+
     def disconnect(self):
         self.manager.transition = SlideTransition(direction="right")
         self.manager.current = 'interface3'
